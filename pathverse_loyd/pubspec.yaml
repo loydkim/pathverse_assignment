@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+
+  # design
+  google_fonts: ^4.0.3
   collapsible_sidebar: ^2.0.3+3
 
 dev_dependencies:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -45,23 +46,24 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SizedBox(
-                  //   height: 50,
-                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                     child: Text("Welcome! We're happy to see you.",
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
-                            fontSize: 20)),
+                        style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: Colors.white.withOpacity(0.4))),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       children: [
-                        const Text("Let's sign you in.",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30)),
+                        Text("Let's sign you in.",
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 30,
+                                color: Colors.white,
+                                letterSpacing: 1)),
                         const SizedBox(
                           width: 10,
                         ),
