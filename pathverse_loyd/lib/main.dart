@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pathverse_loyd/pages/home_landing/home_landing.dart';
 import 'package:pathverse_loyd/pages/login/login.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const Login(),
+      home: const HomeLanding(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pathverse_loyd/pages/home_landing/home_landing.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -221,14 +222,12 @@ class _LoginState extends State<Login> {
                                           // Validate returns true if the form is valid, or false otherwise.
                                           if (_formKey.currentState!.validate())
                                             {
-                                              // If the form is valid, display a snackbar. In the real world,
-                                              // you'd often call a server or save the information in a database.
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'Processing Data')),
-                                              )
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                      MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomeLanding(),
+                                              ))
                                             }
                                         },
                                     child: Text("Log in")),
