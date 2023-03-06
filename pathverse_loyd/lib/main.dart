@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pathverse_loyd/common/theme/app_theme.dart';
 import 'package:pathverse_loyd/pages/home_landing/home_landing.dart';
 import 'package:pathverse_loyd/pages/login/login.dart';
 
@@ -14,10 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pathverse Loyd',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: const HomeLanding(),
+      theme: appTheme,
+      home: const Login(),
     );
   }
 }
