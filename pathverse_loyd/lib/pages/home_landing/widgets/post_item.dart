@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pathverse_loyd/models/post.dart';
+import 'package:pathverse_loyd/pages/comment/comment_page.dart';
+import 'package:pathverse_loyd/pages/user/user_page.dart';
 
 class PostItem extends StatelessWidget {
   final Post post;
-  const PostItem({super.key, required this.post});
+  final bool isShowUserName;
+  const PostItem({super.key, required this.post, this.isShowUserName = true});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +32,19 @@ class PostItem extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(
-                      "User${post.userId.toString()}",
-                    ),
+                    isShowUserName
+                        ? GestureDetector(
+                            onTap: () => {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    UserPage(userId: post.userId),
+                              ))
+                            },
+                            child: Text(
+                              "User${post.userId.toString()}",
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
                 const SizedBox(
@@ -39,6 +52,25 @@ class PostItem extends StatelessWidget {
                 ),
                 Text(
                   post.body,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CommentPage(post: post),
+                        ))
+                      },
+                      child: Text(
+                        "View comments",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
