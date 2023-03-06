@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:pathverse_loyd/models/post.dart';
-import 'package:pathverse_loyd/pages/home_landing/widgets/post_item.dart';
+import 'package:pathverse_loyd/common/widgets/post_item.dart';
+import 'package:pathverse_loyd/provider/users_api_provider.dart';
 
 class UserPage extends StatefulWidget {
   final int userId;
@@ -22,22 +20,9 @@ class _UserPageState extends State<UserPage> {
   }
 
   loadRecentPosts() async {
-    final response = await http.get(Uri.parse(
-        'https://jsonplaceholder.typicode.com/users/${widget.userId}/posts'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> result = jsonDecode(response.body);
-
-      for (var element in result) {
-        recentPosts.add(Post.fromJson(element));
-      }
-
-      setState(() {});
-
-      print("finish load Post");
-    } else {
-      throw Exception('Failed to load album');
-    }
+    final usersAPIProvider = UsersAPIProvider();
+    recentPosts = await usersAPIProvider.loadUserPosts(widget.userId);
+    setState(() {});
   }
 
   @override

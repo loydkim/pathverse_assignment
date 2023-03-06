@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/models/comment.dart';
-import 'package:pathverse_loyd/pages/comment/comment_page.dart';
-import 'package:pathverse_loyd/pages/user/user_page.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;

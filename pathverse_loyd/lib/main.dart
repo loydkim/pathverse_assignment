@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Pathverse Loyd',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: const Login(),
+      home: const HomeLanding(),
     );
   }
 }

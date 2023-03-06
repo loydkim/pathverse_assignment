@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:pathverse_loyd/models/comment.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/pages/comment/widgets/comment_item.dart';
+import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
 class CommentPage extends StatefulWidget {
   final Post post;
@@ -23,22 +21,9 @@ class _CommentPageState extends State<CommentPage> {
   }
 
   loadComments() async {
-    final response = await http.get(Uri.parse(
-        'https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> result = jsonDecode(response.body);
-
-      for (var element in result) {
-        comments.add(Comment.fromJson(element));
-      }
-
-      setState(() {});
-
-      print("finish load Post");
-    } else {
-      throw Exception('Failed to load album');
-    }
+    final postsAPIProvider = PostsAPIProvider();
+    comments = await postsAPIProvider.loadComments(widget.post.id);
+    setState(() {});
   }
 
   @override
@@ -48,7 +33,6 @@ class _CommentPageState extends State<CommentPage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        // title: Text("User${widget.userId}"),
       ),
       body: Container(
           color: Colors.white,

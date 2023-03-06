@@ -1,14 +1,12 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:pathverse_loyd/common/utils/constants.dart';
 import 'package:pathverse_loyd/models/post.dart';
-import 'package:pathverse_loyd/pages/home_landing/widgets/post_item.dart';
+import 'package:pathverse_loyd/common/widgets/post_item.dart';
 import 'package:pathverse_loyd/pages/home_landing/widgets/sign_out.dart';
-
-enum Pages { dashboard, singout }
+import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
 class HomeLanding extends StatefulWidget {
   const HomeLanding({super.key});
@@ -19,7 +17,6 @@ class HomeLanding extends StatefulWidget {
 
 class _HomeLandingState extends State<HomeLanding> {
   late List<CollapsibleItem> _items;
-  late String _headline;
   Pages currentPage = Pages.dashboard;
   List<Post> posts = [];
   int itemCount = 20;
@@ -29,7 +26,6 @@ class _HomeLandingState extends State<HomeLanding> {
   void initState() {
     super.initState();
     _items = _generateItems;
-    _headline = _items.firstWhere((item) => item.isSelected).text;
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
           _scrollController.position.pixels) {
@@ -37,7 +33,6 @@ class _HomeLandingState extends State<HomeLanding> {
           setState(() {
             itemCount = min(itemCount + 20, posts.length);
           });
-          print("itemCount is $itemCount");
         }
       }
     });
@@ -45,20 +40,9 @@ class _HomeLandingState extends State<HomeLanding> {
   }
 
   loadPost() async {
-    final response =
-        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> result = jsonDecode(response.body);
-
-      for (var element in result) {
-        posts.add(Post.fromJson(element));
-      }
-      setState(() {});
-      print("finish fetch");
-    } else {
-      throw Exception('Failed to load album');
-    }
+    final postsAPIProvider = PostsAPIProvider();
+    posts = await postsAPIProvider.fetchPosts();
+    setState(() {});
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -131,18 +115,15 @@ class _HomeLandingState extends State<HomeLanding> {
           height: double.infinity,
           width: double.infinity,
           color: Colors.white,
-          child: ListView.builder(
-            itemCount: itemCount,
-            controller: _scrollController,
-            itemBuilder: (context, index) {
-              if (posts.length >= itemCount) {
-                return PostItem(post: posts[index]);
-              } else {
-                return const Text("Loading");
-              }
-              // return posts.map((post) => PostItem(post: post)).toList();
-            },
-          ),
+          child: posts.length >= itemCount
+              ? ListView.builder(
+                  itemCount: itemCount,
+                  controller: _scrollController,
+                  itemBuilder: (context, index) {
+                    return PostItem(post: posts[index]);
+                  },
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
 
       case Pages.singout:

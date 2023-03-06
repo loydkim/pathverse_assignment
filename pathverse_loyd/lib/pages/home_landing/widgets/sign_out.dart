@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pathverse_loyd/pages/login/login.dart';
 
 class SignOut extends StatelessWidget {
   const SignOut({super.key});
@@ -13,16 +14,22 @@ class SignOut extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text("Sign Out",
+              const Text("Sign Out",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 14.0),
                 child: Text("Would you like to sign out?"),
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Sign Out"))
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const Login(),
+                    ));
+                  },
+                  child: const Text("Sign Out"))
             ],
           ),
         ));

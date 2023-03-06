@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/pages/comment/comment_page.dart';
 import 'package:pathverse_loyd/pages/user/user_page.dart';
@@ -28,7 +26,7 @@ class PostItem extends StatelessWidget {
                     Expanded(
                       child: Text(
                         post.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -58,14 +56,14 @@ class PostItem extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CommentPage(post: post),
                         ))
                       },
-                      child: Text(
+                      child: const Text(
                         "View comments",
                         style: TextStyle(color: Colors.grey),
                       ),
