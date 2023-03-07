@@ -61,24 +61,39 @@ class _HomeLandingState extends State<HomeLanding> {
     ];
   }
 
+  bool _isHideSidebar = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Pathverse"),
+        leading: IconButton(
+          icon: Icon(_isHideSidebar ? Icons.menu : Icons.segment),
+          onPressed: () {
+            setState(() {
+              _isHideSidebar = !_isHideSidebar;
+            });
+          },
+        ),
+      ),
       body: SafeArea(
         bottom: false,
         child: Container(
           color: Colors.white,
           child: CollapsibleSidebar(
-            isCollapsed: MediaQuery.of(context).size.width <= 800,
+            isCollapsed: _isHideSidebar
+                ? true
+                : MediaQuery.of(context).size.width <= 800,
             items: _items,
-            height: 255,
-            collapseOnBodyTap: true,
+            height: _isHideSidebar ? 0 : 255,
+            collapseOnBodyTap: _isHideSidebar ? false : true,
             avatarImg: const AssetImage('assets/images/logo.png'),
             title: 'Pathverse',
             iconSize: 30,
-            minWidth: 72,
-            maxWidth: 260,
+            minWidth: _isHideSidebar ? 0 : 72,
+            maxWidth: _isHideSidebar ? 0 : 260,
             screenPadding: 8,
             topPadding: 10,
             body: _body(size, context),
@@ -111,19 +126,23 @@ class _HomeLandingState extends State<HomeLanding> {
   Widget _body(Size size, BuildContext context) {
     switch (currentPage) {
       case Pages.dashboard:
-        return Container(
-          height: double.infinity,
-          width: double.infinity,
-          color: Colors.white,
-          child: posts.length >= itemCount
-              ? ListView.builder(
-                  itemCount: itemCount,
-                  controller: _scrollController,
-                  itemBuilder: (context, index) {
-                    return PostItem(post: posts[index]);
-                  },
-                )
-              : const Center(child: CircularProgressIndicator()),
+        return AnimatedSize(
+          duration: const Duration(milliseconds: 45),
+          curve: Curves.easeOut,
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.white,
+            child: posts.length >= itemCount
+                ? ListView.builder(
+                    itemCount: itemCount,
+                    controller: _scrollController,
+                    itemBuilder: (context, index) {
+                      return PostItem(post: posts[index]);
+                    },
+                  )
+                : const Center(child: CircularProgressIndicator()),
+          ),
         );
 
       case Pages.singout:
