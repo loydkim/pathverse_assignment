@@ -34,6 +34,12 @@ class _CommentPageState extends State<CommentPage> {
         backgroundColor: Colors.indigo.shade800,
         foregroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Container(
           color: Colors.indigo.shade800,

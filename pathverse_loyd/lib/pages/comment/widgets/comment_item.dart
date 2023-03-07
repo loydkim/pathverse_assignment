@@ -42,10 +42,67 @@ class CommentItem extends StatelessWidget {
                     Text(
                       comment.email,
                     ),
+                    Spacer(),
+                    PopupMenuButton(
+                        // add icon, by default "3 dot" icon
+                        // padding: EdgeInsets.zero,
+                        child: Container(
+                          height: 36,
+                          width: 48,
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.more_vert,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        // icon: Icon(Icons.more_vert),
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem<int>(
+                              value: 0,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.report,
+                                    size: 20,
+                                    color: Colors.indigo.shade900,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Report",
+                                    style: AppTextTheme.styleW400,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem<int>(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.block,
+                                    size: 20,
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Block",
+                                    style: AppTextTheme.styleW400,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ];
+                        },
+                        onSelected: (value) {}),
                   ],
                 ),
                 const SizedBox(
-                  height: 14,
+                  height: 8,
                 ),
                 Text(
                   comment.name,

@@ -68,12 +68,12 @@ class _UserPageState extends State<UserPage> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.edit,
-                                size: 18,
+                                Icons.edit_calendar,
+                                size: 28,
                                 color: Colors.black54,
                               ),
                               SizedBox(
-                                width: 6,
+                                width: 10,
                               ),
                               Text("Recent Posts",
                                   style: AppTextTheme.styleW700.copyWith(

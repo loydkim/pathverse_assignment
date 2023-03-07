@@ -22,6 +22,7 @@ class _HomeLandingState extends State<HomeLanding> {
   List<Post> posts = [];
   int itemCount = 20;
   final ScrollController _scrollController = ScrollController();
+  bool _isShowSearchBar = false;
 
   @override
   void initState() {
@@ -104,6 +105,49 @@ class _HomeLandingState extends State<HomeLanding> {
         foregroundColor: Colors.white,
         elevation: 1.1,
         toolbarHeight: 66,
+        bottom: _isShowSearchBar
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(58.0),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 44.0,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(14))),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: Colors.white.withOpacity(0.6),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "What user Id are you searching for?",
+                                style: AppTextTheme.styleW400.copyWith(
+                                    fontSize: 14,
+                                    color: Colors.white.withOpacity(0.6)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            : null,
         leading: IconButton(
           icon: Icon(_isHideSidebar ? Icons.menu : Icons.segment),
           onPressed: () {
@@ -115,7 +159,11 @@ class _HomeLandingState extends State<HomeLanding> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                _isShowSearchBar = !_isShowSearchBar;
+              });
+            },
           ),
           IconButton(
             icon: const Icon(Icons.notifications),
