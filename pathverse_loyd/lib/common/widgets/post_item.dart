@@ -68,9 +68,6 @@ class PostItem extends StatelessWidget {
                   post.body,
                   trimLines: 4,
                 ),
-                // Text(
-                //   post.body,
-                // ),
                 const SizedBox(
                   height: 16,
                 ),

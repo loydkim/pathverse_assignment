@@ -28,8 +28,8 @@ class _HomeLandingState extends State<HomeLanding> {
     super.initState();
     _items = _generateItems;
     _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent ==
-          _scrollController.position.pixels) {
+      if (_scrollController.position.maxScrollExtent >
+          _scrollController.position.pixels - 100) {
         if (itemCount < posts.length) {
           setState(() {
             itemCount = min(itemCount + 20, posts.length);
@@ -123,44 +123,47 @@ class _HomeLandingState extends State<HomeLanding> {
           ),
         ],
       ),
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 4.0),
-          child: CollapsibleSidebar(
-            isCollapsed: _isHideSidebar
-                ? true
-                : MediaQuery.of(context).size.width <= 800,
-            items: _items,
-            height: _isHideSidebar ? 0 : 205,
-            collapseOnBodyTap: _isHideSidebar ? false : true,
-            iconSize: 30,
-            minWidth: _isHideSidebar ? 0 : 72,
-            maxWidth: _isHideSidebar ? 0 : 260,
-            showTitle: false,
-            screenPadding: 8,
-            topPadding: 10,
-            body: _body(size, context),
-            backgroundColor: Colors.black,
-            selectedTextColor: Colors.limeAccent,
-            textStyle: TextStyle(fontSize: 15),
-            titleStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            toggleTitleStyle:
-                TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            sidebarBoxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.8),
-                blurRadius: 4,
-                spreadRadius: 0.01,
-                offset: Offset(0.1, 0.1),
-              ),
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.8),
-                blurRadius: 4,
-                spreadRadius: 0.01,
-                offset: Offset(0.1, 0.1),
-              ),
-            ],
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+            child: CollapsibleSidebar(
+              isCollapsed: _isHideSidebar
+                  ? true
+                  : MediaQuery.of(context).size.width <= 800,
+              items: _items,
+              height: _isHideSidebar ? 0 : 205,
+              collapseOnBodyTap: _isHideSidebar ? false : true,
+              iconSize: 30,
+              minWidth: _isHideSidebar ? 0 : 72,
+              maxWidth: _isHideSidebar ? 0 : 260,
+              showTitle: false,
+              screenPadding: 8,
+              topPadding: 10,
+              body: _body(size, context),
+              backgroundColor: Colors.black,
+              selectedTextColor: Colors.limeAccent,
+              textStyle: const TextStyle(fontSize: 15),
+              titleStyle:
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              toggleTitleStyle:
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              sidebarBoxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.8),
+                  blurRadius: 4,
+                  spreadRadius: 0.01,
+                  offset: const Offset(0.1, 0.1),
+                ),
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.8),
+                  blurRadius: 4,
+                  spreadRadius: 0.01,
+                  offset: const Offset(0.1, 0.1),
+                ),
+              ],
+            ),
           ),
         ),
       ),
