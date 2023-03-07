@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/common/utils/constants.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/common/widgets/post_item.dart';
@@ -68,7 +69,41 @@ class _HomeLandingState extends State<HomeLanding> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pathverse"),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/login_bg.png'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16))),
+        ),
+        shape: const ContinuousRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40))),
+        title: SizedBox(
+          child: Row(
+            children: [
+              SizedBox(
+                  width: 28,
+                  height: 28,
+                  child: Image.asset("assets/images/logo.png")),
+              const SizedBox(
+                width: 6,
+              ),
+              Text("PATHVERSE",
+                  style: AppTextTheme.styleW700.copyWith(
+                      fontSize: 20, color: Colors.white, letterSpacing: 2.6)),
+            ],
+          ),
+        ),
+        centerTitle: false,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        elevation: 1.1,
+        toolbarHeight: 66,
         leading: IconButton(
           icon: Icon(_isHideSidebar ? Icons.menu : Icons.segment),
           onPressed: () {
@@ -77,23 +112,32 @@ class _HomeLandingState extends State<HomeLanding> {
             });
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {},
+          ),
+        ],
       ),
-      body: SafeArea(
-        bottom: false,
-        child: Container(
-          color: Colors.white,
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 4.0),
           child: CollapsibleSidebar(
             isCollapsed: _isHideSidebar
                 ? true
                 : MediaQuery.of(context).size.width <= 800,
             items: _items,
-            height: _isHideSidebar ? 0 : 255,
+            height: _isHideSidebar ? 0 : 205,
             collapseOnBodyTap: _isHideSidebar ? false : true,
-            avatarImg: const AssetImage('assets/images/logo.png'),
-            title: 'Pathverse',
             iconSize: 30,
             minWidth: _isHideSidebar ? 0 : 72,
             maxWidth: _isHideSidebar ? 0 : 260,
+            showTitle: false,
             screenPadding: 8,
             topPadding: 10,
             body: _body(size, context),
@@ -103,16 +147,16 @@ class _HomeLandingState extends State<HomeLanding> {
             titleStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             toggleTitleStyle:
                 TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            sidebarBoxShadow: const [
+            sidebarBoxShadow: [
               BoxShadow(
-                color: Colors.grey,
-                blurRadius: 10,
+                color: Colors.grey.withOpacity(0.8),
+                blurRadius: 4,
                 spreadRadius: 0.01,
                 offset: Offset(0.1, 0.1),
               ),
               BoxShadow(
-                color: Colors.grey,
-                blurRadius: 10,
+                color: Colors.grey.withOpacity(0.8),
+                blurRadius: 4,
                 spreadRadius: 0.01,
                 offset: Offset(0.1, 0.1),
               ),

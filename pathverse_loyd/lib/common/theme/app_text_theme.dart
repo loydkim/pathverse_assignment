@@ -31,6 +31,7 @@ class AppTextTheme {
     overline: GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 10),
   );
 
+  static TextStyle styleW300 = GoogleFonts.roboto(fontWeight: FontWeight.w300);
   static TextStyle styleW400 = GoogleFonts.roboto(fontWeight: FontWeight.w400);
   static TextStyle styleW500 = GoogleFonts.roboto(fontWeight: FontWeight.w500);
   static TextStyle styleW600 = GoogleFonts.roboto(fontWeight: FontWeight.w600);
