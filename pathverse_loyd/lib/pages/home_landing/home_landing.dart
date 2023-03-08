@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
-import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/common/utils/constants.dart';
+import 'package:pathverse_loyd/common/widgets/custom_app_bar.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/common/widgets/post_item.dart';
+import 'package:pathverse_loyd/pages/home_landing/widgets/collapsible_side_bar.dart';
 import 'package:pathverse_loyd/pages/home_landing/widgets/sign_out.dart';
 import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
@@ -17,12 +18,13 @@ class HomeLanding extends StatefulWidget {
 }
 
 class _HomeLandingState extends State<HomeLanding> {
-  late List<CollapsibleItem> _items;
-  Pages currentPage = Pages.dashboard;
-  List<Post> posts = [];
-  int itemCount = 20;
   final ScrollController _scrollController = ScrollController();
+  late List<CollapsibleItem> _items;
+  Pages _currentPage = Pages.dashboard;
+  List<Post> _posts = [];
+  int _itemCount = 20;
   bool _isShowSearchBar = false;
+  bool _isHideSidebar = false;
 
   @override
   void initState() {
@@ -31,20 +33,13 @@ class _HomeLandingState extends State<HomeLanding> {
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent >
           _scrollController.position.pixels - 100) {
-        if (itemCount < posts.length) {
+        if (_itemCount < _posts.length) {
           setState(() {
-            itemCount = min(itemCount + 20, posts.length);
+            _itemCount = min(_itemCount + 20, _posts.length);
           });
         }
       }
     });
-    loadPost();
-  }
-
-  loadPost() async {
-    final postsAPIProvider = PostsAPIProvider();
-    posts = await postsAPIProvider.fetchPosts();
-    setState(() {});
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -52,174 +47,66 @@ class _HomeLandingState extends State<HomeLanding> {
       CollapsibleItem(
         text: 'Dashboard',
         icon: Icons.assessment,
-        onPressed: () => setState(() => currentPage = Pages.dashboard),
+        onPressed: () => setState(() => _currentPage = Pages.dashboard),
         isSelected: true,
       ),
       CollapsibleItem(
         text: 'Signout',
         icon: Icons.logout,
-        onPressed: () => setState(() => currentPage = Pages.singout),
+        onPressed: () => setState(() => _currentPage = Pages.singout),
       ),
     ];
   }
-
-  bool _isHideSidebar = false;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/login_bg.png'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16))),
-        ),
-        shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40))),
-        title: SizedBox(
-          child: Row(
-            children: [
-              SizedBox(
-                  width: 28,
-                  height: 28,
-                  child: Image.asset("assets/images/logo.png")),
-              const SizedBox(
-                width: 6,
-              ),
-              Text("PATHVERSE",
-                  style: AppTextTheme.styleW700.copyWith(
-                      fontSize: 20, color: Colors.white, letterSpacing: 2.6)),
-            ],
-          ),
-        ),
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
-        elevation: 1.1,
-        toolbarHeight: 66,
-        bottom: _isShowSearchBar
-            ? PreferredSize(
-                preferredSize: const Size.fromHeight(58.0),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 44.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(14))),
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.search,
-                                color: Colors.white.withOpacity(0.6),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "What user Id are you searching for?",
-                                style: AppTextTheme.styleW400.copyWith(
-                                    fontSize: 14,
-                                    color: Colors.white.withOpacity(0.6)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 14,
-                      )
-                    ],
-                  ),
-                ),
-              )
-            : null,
-        leading: IconButton(
-          icon: Icon(_isHideSidebar ? Icons.menu : Icons.segment),
-          onPressed: () {
-            setState(() {
-              _isHideSidebar = !_isHideSidebar;
-            });
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              setState(() {
-                _isShowSearchBar = !_isShowSearchBar;
-              });
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
+      appBar: CustomAppBar.homeLandingAppBar(
+        isShowSearchBar: _isShowSearchBar,
+        updateSearchBar: (showSearchBar) {
+          setState(() {
+            _isShowSearchBar = showSearchBar;
+          });
+        },
+        isHideSidebar: _isHideSidebar,
+        updateHideSidebar: (showHideSidebar) {
+          setState(() {
+            _isHideSidebar = showHideSidebar;
+          });
+        },
       ),
       body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 4.0),
-            child: CollapsibleSidebar(
-              isCollapsed: _isHideSidebar
-                  ? true
-                  : MediaQuery.of(context).size.width <= 800,
-              items: _items,
-              height: _isHideSidebar ? 0 : 205,
-              collapseOnBodyTap: _isHideSidebar ? false : true,
-              iconSize: 30,
-              minWidth: _isHideSidebar ? 0 : 72,
-              maxWidth: _isHideSidebar ? 0 : 260,
-              showTitle: false,
-              screenPadding: 8,
-              topPadding: 10,
-              body: _body(size, context),
-              backgroundColor: Colors.black,
-              selectedTextColor: Colors.limeAccent,
-              textStyle: const TextStyle(fontSize: 15),
-              titleStyle:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              toggleTitleStyle:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              sidebarBoxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.8),
-                  blurRadius: 4,
-                  spreadRadius: 0.01,
-                  offset: const Offset(0.1, 0.1),
-                ),
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.8),
-                  blurRadius: 4,
-                  spreadRadius: 0.01,
-                  offset: const Offset(0.1, 0.1),
-                ),
-              ],
-            ),
-          ),
+        child: FutureBuilder<List<Post>>(
+          future: PostsAPIProvider().fetchPosts(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('An error has occurred!'),
+              );
+            } else if (snapshot.hasData) {
+              _posts = snapshot.data ?? [];
+              if (_posts.isEmpty) {
+                return const Center(child: Text("No Posts"));
+              }
+
+              return PathverseCollapsibleSideBar(
+                  isHideSidebar: _isHideSidebar,
+                  items: _items,
+                  body: _body(size, context));
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );
   }
 
   Widget _body(Size size, BuildContext context) {
-    switch (currentPage) {
+    switch (_currentPage) {
       case Pages.dashboard:
         return AnimatedSize(
           duration: const Duration(milliseconds: 45),
@@ -228,12 +115,12 @@ class _HomeLandingState extends State<HomeLanding> {
             height: double.infinity,
             width: double.infinity,
             color: Colors.white,
-            child: posts.length >= itemCount
+            child: _posts.length >= _itemCount
                 ? ListView.builder(
-                    itemCount: itemCount,
+                    itemCount: _itemCount,
                     controller: _scrollController,
                     itemBuilder: (context, index) {
-                      return PostItem(post: posts[index]);
+                      return PostItem(post: _posts[index]);
                     },
                   )
                 : const Center(child: CircularProgressIndicator()),

@@ -25,37 +25,34 @@ class CommentItem extends StatelessWidget {
                     offset: const Offset(0, 3)),
               ]),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.mail,
                       size: 18,
                       color: Colors.grey,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 6,
                     ),
                     Text(
                       comment.email,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     PopupMenuButton(
-                        // add icon, by default "3 dot" icon
-                        // padding: EdgeInsets.zero,
                         child: Container(
                           height: 36,
                           width: 48,
                           alignment: Alignment.centerRight,
-                          child: Icon(
+                          child: const Icon(
                             Icons.more_vert,
                             color: Colors.black54,
                           ),
                         ),
-                        // icon: Icon(Icons.more_vert),
                         itemBuilder: (context) {
                           return [
                             PopupMenuItem<int>(
@@ -67,7 +64,7 @@ class CommentItem extends StatelessWidget {
                                     size: 20,
                                     color: Colors.indigo.shade900,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
@@ -81,12 +78,12 @@ class CommentItem extends StatelessWidget {
                               value: 1,
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.block,
                                     size: 20,
                                     color: Colors.red,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
@@ -102,7 +99,7 @@ class CommentItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 2,
                 ),
                 Text(
                   comment.name,

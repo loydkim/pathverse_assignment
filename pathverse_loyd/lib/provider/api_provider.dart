@@ -8,10 +8,6 @@ import 'package:pathverse_loyd/common/utils/constants.dart';
 class ApiProvider {
   Future<http.Response> request(String endpoint, HttpVerbs verb,
       {dynamic body}) async {
-    // if (!await Functions.isConnecteInternet()) {
-    //   throw Exception("common.errors.require_internet");
-    // }
-
     http.Response result;
     Uri apiUrl = Config.apiUrl;
     Uri uri = apiUrl.resolve(endpoint);

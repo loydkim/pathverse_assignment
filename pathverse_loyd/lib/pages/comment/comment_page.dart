@@ -5,27 +5,9 @@ import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/pages/comment/widgets/comment_item.dart';
 import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
-class CommentPage extends StatefulWidget {
+class CommentPage extends StatelessWidget {
   final Post post;
   const CommentPage({super.key, required this.post});
-
-  @override
-  State<CommentPage> createState() => _CommentPageState();
-}
-
-class _CommentPageState extends State<CommentPage> {
-  List<Comment> comments = [];
-  @override
-  void initState() {
-    super.initState();
-    loadComments();
-  }
-
-  loadComments() async {
-    final postsAPIProvider = PostsAPIProvider();
-    comments = await postsAPIProvider.loadComments(widget.post.id);
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +38,7 @@ class _CommentPageState extends State<CommentPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.post.title,
+                          post.title,
                           style: AppTextTheme.styleW700
                               .copyWith(fontSize: 20, color: Colors.white),
                         ),
@@ -64,7 +46,7 @@ class _CommentPageState extends State<CommentPage> {
                           height: 10,
                         ),
                         Text(
-                          widget.post.body,
+                          post.body,
                           style: AppTextTheme.styleW300
                               .copyWith(fontSize: 16, color: Colors.white),
                         ),
@@ -96,7 +78,7 @@ class _CommentPageState extends State<CommentPage> {
                                 color: Colors.black54,
                                 size: 28,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Text(
@@ -112,14 +94,31 @@ class _CommentPageState extends State<CommentPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        comments.isEmpty
-                            ? Center(child: CircularProgressIndicator())
-                            : Column(
-                                children: comments
+                        FutureBuilder(
+                          future: PostsAPIProvider().loadComments(post.id),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Text('An error has occurred!'),
+                              );
+                            } else if (snapshot.hasData) {
+                              if (snapshot.data!.isEmpty) {
+                                return const Center(child: Text("No Comments"));
+                              }
+
+                              return Column(
+                                children: snapshot.data!
                                     .map((comment) =>
                                         CommentItem(comment: comment))
                                     .toList(),
-                              )
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
