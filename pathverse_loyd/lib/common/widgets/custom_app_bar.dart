@@ -2,27 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 
 class CustomAppBar {
-  static AppBar userPageAppBar({required int userId}) {
-    return AppBar(
-      shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40))),
-      backgroundColor: Colors.indigo.shade800,
-      foregroundColor: Colors.white,
-      centerTitle: false,
-      elevation: 1,
-      toolbarHeight: 66,
-      title: Text("User$userId"),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.info),
-          onPressed: () {},
-        ),
-      ],
-    );
-  }
-
   static AppBar homeLandingAppBar({
     required bool isShowSearchBar,
     required Function(bool) updateSearchBar,
