@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/common/widgets/post_item.dart';
+import 'package:pathverse_loyd/common/widgets/post_loading_item.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/provider/users_api_provider.dart';
 
@@ -36,11 +37,12 @@ class UserPage extends StatelessWidget {
                 );
               }, childCount: posts.length));
             } else {
-              recentPostListSliver = const SliverToBoxAdapter(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              recentPostListSliver = SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                return const PostLoadingItem(
+                  isShowUserName: false,
+                );
+              }, childCount: 10));
             }
 
             return CustomScrollView(

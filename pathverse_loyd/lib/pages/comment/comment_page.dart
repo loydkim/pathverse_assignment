@@ -3,6 +3,7 @@ import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/models/comment.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/pages/comment/widgets/comment_item.dart';
+import 'package:pathverse_loyd/pages/comment/widgets/comment_item_loading.dart';
 import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
 class CommentPage extends StatelessWidget {
@@ -113,8 +114,14 @@ class CommentPage extends StatelessWidget {
                                     .toList(),
                               );
                             } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
+                              return Column(
+                                children: const [
+                                  CommentItemLoading(),
+                                  CommentItemLoading(),
+                                  CommentItemLoading(),
+                                  CommentItemLoading(),
+                                  CommentItemLoading()
+                                ],
                               );
                             }
                           },

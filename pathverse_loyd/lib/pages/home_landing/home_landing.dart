@@ -4,6 +4,7 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/utils/constants.dart';
 import 'package:pathverse_loyd/common/widgets/custom_app_bar.dart';
+import 'package:pathverse_loyd/common/widgets/post_loading_item.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/common/widgets/post_item.dart';
 import 'package:pathverse_loyd/pages/home_landing/widgets/collapsible_side_bar.dart';
@@ -91,13 +92,12 @@ class _HomeLandingState extends State<HomeLanding> {
               }
 
               return PathverseCollapsibleSideBar(
+                  isHideSidebar: _isHideSidebar, items: _items, body: _body());
+            } else {
+              return PathverseCollapsibleSideBar(
                   isHideSidebar: _isHideSidebar,
                   items: _items,
-                  body: _body(size, context));
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+                  body: _loading());
             }
           },
         ),
@@ -105,7 +105,21 @@ class _HomeLandingState extends State<HomeLanding> {
     );
   }
 
-  Widget _body(Size size, BuildContext context) {
+  Widget _loading() {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: Colors.white,
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return const PostLoadingItem();
+        },
+      ),
+    );
+  }
+
+  Widget _body() {
     switch (_currentPage) {
       case Pages.dashboard:
         return AnimatedSize(

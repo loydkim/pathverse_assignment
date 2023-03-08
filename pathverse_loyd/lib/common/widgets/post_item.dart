@@ -34,25 +34,28 @@ class PostItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 isShowUserName
-                    ? OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                                width: 0.4, color: Colors.amber.shade900),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            backgroundColor:
-                                Colors.amber.shade900.withOpacity(0.15),
-                            foregroundColor: Colors.amber.shade900),
-                        onPressed: () => {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    UserPage(userId: post.userId),
-                              ))
-                            },
-                        child: Text(
-                          "User${post.userId.toString()}",
-                        ))
+                    ? SizedBox(
+                        height: 30,
+                        child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                    width: 0.4, color: Colors.amber.shade900),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                backgroundColor:
+                                    Colors.amber.shade900.withOpacity(0.15),
+                                foregroundColor: Colors.amber.shade900),
+                            onPressed: () => {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        UserPage(userId: post.userId),
+                                  ))
+                                },
+                            child: Text(
+                              "User${post.userId.toString()}",
+                            )),
+                      )
                     : Container(),
                 const SizedBox(
                   height: 6,
