@@ -5,7 +5,8 @@ import 'package:pathverse_loyd/models/comment.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;
-  const CommentItem({super.key, required this.comment});
+  final Color color;
+  const CommentItem({super.key, required this.comment, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,10 @@ class CommentItem extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.deepPurple.withOpacity(0.14),
-                    blurRadius: 7,
-                    spreadRadius: 5,
-                    offset: const Offset(0, 3)),
+                    color: color.withOpacity(0.1),
+                    blurRadius: 3,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 1)),
               ]),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),

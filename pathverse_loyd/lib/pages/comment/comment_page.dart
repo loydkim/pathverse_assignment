@@ -109,18 +109,30 @@ class CommentPage extends StatelessWidget {
 
                               return Column(
                                 children: snapshot.data!
-                                    .map((comment) =>
-                                        CommentItem(comment: comment))
+                                    .map((comment) => CommentItem(
+                                          comment: comment,
+                                          color: color,
+                                        ))
                                     .toList(),
                               );
                             } else {
                               return Column(
-                                children: const [
-                                  CommentItemLoading(),
-                                  CommentItemLoading(),
-                                  CommentItemLoading(),
-                                  CommentItemLoading(),
-                                  CommentItemLoading()
+                                children: [
+                                  CommentItemLoading(
+                                    color: color,
+                                  ),
+                                  CommentItemLoading(
+                                    color: color,
+                                  ),
+                                  CommentItemLoading(
+                                    color: color,
+                                  ),
+                                  CommentItemLoading(
+                                    color: color,
+                                  ),
+                                  CommentItemLoading(
+                                    color: color,
+                                  ),
                                 ],
                               );
                             }

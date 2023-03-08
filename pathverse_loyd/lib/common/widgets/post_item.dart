@@ -9,10 +9,10 @@ import 'package:pathverse_loyd/pages/user/user_page.dart';
 
 class PostItem extends StatelessWidget {
   final Post post;
-  final User? user;
+  final Color? color;
   final bool isShowUserName;
   const PostItem(
-      {super.key, required this.post, this.isShowUserName = true, this.user});
+      {super.key, required this.post, this.isShowUserName = true, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class PostItem extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
-                    color: user?.color.withOpacity(0.14) ??
+                    color: color?.withOpacity(0.14) ??
                         Colors.deepPurple.withOpacity(0.14),
                     blurRadius: 6,
                     spreadRadius: 2,
@@ -44,22 +44,20 @@ class PostItem extends StatelessWidget {
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
                                     width: 0.4,
-                                    color:
-                                        user?.color ?? Colors.amber.shade900),
+                                    color: color ?? Colors.amber.shade900),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                backgroundColor:
-                                    user?.color.withOpacity(0.15) ??
-                                        Colors.amber.shade900.withOpacity(0.15),
+                                backgroundColor: color?.withOpacity(0.15) ??
+                                    Colors.amber.shade900.withOpacity(0.15),
                                 foregroundColor:
-                                    user?.color ?? Colors.amber.shade900),
+                                    color ?? Colors.amber.shade900),
                             onPressed: () => {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => UserPage(
                                       userId: post.userId,
                                       userColor:
-                                          user?.color ?? Colors.indigo.shade800,
+                                          color ?? Colors.indigo.shade800,
                                     ),
                                   ))
                                 },
@@ -92,7 +90,7 @@ class PostItem extends StatelessWidget {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CommentPage(
                             post: post,
-                            color: user?.color ?? Colors.indigo.shade800,
+                            color: color ?? Colors.indigo.shade800,
                           ),
                         ))
                       },

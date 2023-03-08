@@ -135,7 +135,7 @@ class _HomeLandingState extends State<HomeLanding> {
                       final post = _posts[index];
                       return PostItem(
                         post: post,
-                        user: _users[post.userId],
+                        color: _users[post.userId]?.color,
                       );
                     },
                   )

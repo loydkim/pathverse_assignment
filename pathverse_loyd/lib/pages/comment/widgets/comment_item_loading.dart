@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/widgets/loading_square.dart';
 
 class CommentItemLoading extends StatelessWidget {
-  const CommentItemLoading({super.key});
+  final Color color;
+  const CommentItemLoading({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,10 @@ class CommentItemLoading extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.deepPurple.withOpacity(0.14),
-                    blurRadius: 7,
-                    spreadRadius: 5,
-                    offset: const Offset(0, 3)),
+                    color: color.withOpacity(0.1),
+                    blurRadius: 3,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 1)),
               ]),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),

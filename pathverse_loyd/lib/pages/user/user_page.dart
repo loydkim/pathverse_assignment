@@ -35,6 +35,7 @@ class UserPage extends StatelessWidget {
                 return PostItem(
                   post: posts[index],
                   isShowUserName: false,
+                  color: userColor,
                 );
               }, childCount: posts.length));
             } else {
