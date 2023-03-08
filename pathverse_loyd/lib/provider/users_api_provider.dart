@@ -19,6 +19,6 @@ class UsersAPIProvider extends ApiProvider {
 
   List<Post> parsePosts(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Post>((json) => Post.fromJson(json)).toList();
+    return parsed.map<Post>(Post.fromJson).toList();
   }
 }

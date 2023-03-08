@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/common/widgets/expandable_text.dart';
 import 'package:pathverse_loyd/models/post.dart';
+import 'package:pathverse_loyd/models/user.dart';
 import 'package:pathverse_loyd/pages/comment/comment_page.dart';
 import 'package:pathverse_loyd/pages/user/user_page.dart';
 
 class PostItem extends StatelessWidget {
   final Post post;
+  final User? user;
   final bool isShowUserName;
-  const PostItem({super.key, required this.post, this.isShowUserName = true});
+  const PostItem(
+      {super.key, required this.post, this.isShowUserName = true, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +26,11 @@ class PostItem extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.deepPurple.withOpacity(0.14),
-                    blurRadius: 7,
-                    spreadRadius: 5,
-                    offset: Offset(0, 3)),
+                    color: user?.color.withOpacity(0.14) ??
+                        Colors.deepPurple.withOpacity(0.14),
+                    blurRadius: 6,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 3)),
               ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
@@ -39,17 +43,24 @@ class PostItem extends StatelessWidget {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                    width: 0.4, color: Colors.amber.shade900),
+                                    width: 0.4,
+                                    color:
+                                        user?.color ?? Colors.amber.shade900),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 backgroundColor:
-                                    Colors.amber.shade900.withOpacity(0.15),
-                                foregroundColor: Colors.amber.shade900),
+                                    user?.color.withOpacity(0.15) ??
+                                        Colors.amber.shade900.withOpacity(0.15),
+                                foregroundColor:
+                                    user?.color ?? Colors.amber.shade900),
                             onPressed: () => {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserPage(userId: post.userId),
+                                    builder: (context) => UserPage(
+                                      userId: post.userId,
+                                      userColor:
+                                          user?.color ?? Colors.indigo.shade800,
+                                    ),
                                   ))
                                 },
                             child: Text(
@@ -79,7 +90,10 @@ class PostItem extends StatelessWidget {
                     GestureDetector(
                       onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CommentPage(post: post),
+                          builder: (context) => CommentPage(
+                            post: post,
+                            color: user?.color ?? Colors.indigo.shade800,
+                          ),
                         ))
                       },
                       child: Text(

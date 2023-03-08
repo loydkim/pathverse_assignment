@@ -20,7 +20,7 @@ class PostsAPIProvider extends ApiProvider {
 
   List<Post> parsePosts(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Post>((json) => Post.fromJson(json)).toList();
+    return parsed.map<Post>(Post.fromJson).toList();
   }
 
   Future<List<Comment>> loadComments(int postId) async {
@@ -35,6 +35,6 @@ class PostsAPIProvider extends ApiProvider {
 
   List<Comment> parseComments(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Comment>((json) => Comment.fromJson(json)).toList();
+    return parsed.map<Comment>(Comment.fromJson).toList();
   }
 }

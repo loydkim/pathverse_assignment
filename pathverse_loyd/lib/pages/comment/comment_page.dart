@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
-import 'package:pathverse_loyd/models/comment.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/pages/comment/widgets/comment_item.dart';
 import 'package:pathverse_loyd/pages/comment/widgets/comment_item_loading.dart';
@@ -8,13 +7,14 @@ import 'package:pathverse_loyd/provider/posts_api_provider.dart';
 
 class CommentPage extends StatelessWidget {
   final Post post;
-  const CommentPage({super.key, required this.post});
+  final Color color;
+  const CommentPage({super.key, required this.post, required this.color});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo.shade800,
+        backgroundColor: color,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -25,14 +25,14 @@ class CommentPage extends StatelessWidget {
         ],
       ),
       body: Container(
-          color: Colors.indigo.shade800,
+          color: color,
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  color: Colors.indigo.shade800,
+                  color: color,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(

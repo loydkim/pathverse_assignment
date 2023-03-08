@@ -7,7 +7,8 @@ import 'package:pathverse_loyd/provider/users_api_provider.dart';
 
 class UserPage extends StatelessWidget {
   final int userId;
-  const UserPage({super.key, required this.userId});
+  final Color userColor;
+  const UserPage({super.key, required this.userId, required this.userColor});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class UserPage extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(40),
                           bottomRight: Radius.circular(40))),
-                  backgroundColor: Colors.indigo.shade800,
+                  backgroundColor: userColor,
                   foregroundColor: Colors.white,
                   title: Text("User$userId"),
                   centerTitle: false,

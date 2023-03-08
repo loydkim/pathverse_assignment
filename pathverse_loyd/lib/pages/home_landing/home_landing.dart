@@ -7,9 +7,11 @@ import 'package:pathverse_loyd/common/widgets/custom_app_bar.dart';
 import 'package:pathverse_loyd/common/widgets/post_loading_item.dart';
 import 'package:pathverse_loyd/models/post.dart';
 import 'package:pathverse_loyd/common/widgets/post_item.dart';
+import 'package:pathverse_loyd/models/user.dart';
 import 'package:pathverse_loyd/pages/home_landing/widgets/collapsible_side_bar.dart';
 import 'package:pathverse_loyd/pages/home_landing/widgets/sign_out.dart';
 import 'package:pathverse_loyd/provider/posts_api_provider.dart';
+import 'dart:math' as math;
 
 class HomeLanding extends StatefulWidget {
   const HomeLanding({super.key});
@@ -23,6 +25,7 @@ class _HomeLandingState extends State<HomeLanding> {
   late List<CollapsibleItem> _items;
   Pages _currentPage = Pages.dashboard;
   List<Post> _posts = [];
+  final Map<int, User> _users = {};
   int _itemCount = 20;
   bool _isShowSearchBar = false;
   bool _isHideSidebar = false;
@@ -61,7 +64,6 @@ class _HomeLandingState extends State<HomeLanding> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar.homeLandingAppBar(
         isShowSearchBar: _isShowSearchBar,
@@ -91,6 +93,16 @@ class _HomeLandingState extends State<HomeLanding> {
                 return const Center(child: Text("No Posts"));
               }
 
+              for (var post in _posts) {
+                if (!_users.containsKey(post.userId)) {
+                  _users[post.userId] = User(
+                      id: post.userId,
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(1.0));
+                }
+              }
+
               return PathverseCollapsibleSideBar(
                   isHideSidebar: _isHideSidebar, items: _items, body: _body());
             } else {
@@ -101,20 +113,6 @@ class _HomeLandingState extends State<HomeLanding> {
             }
           },
         ),
-      ),
-    );
-  }
-
-  Widget _loading() {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: Colors.white,
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return const PostLoadingItem();
-        },
       ),
     );
   }
@@ -134,7 +132,11 @@ class _HomeLandingState extends State<HomeLanding> {
                     itemCount: _itemCount,
                     controller: _scrollController,
                     itemBuilder: (context, index) {
-                      return PostItem(post: _posts[index]);
+                      final post = _posts[index];
+                      return PostItem(
+                        post: post,
+                        user: _users[post.userId],
+                      );
                     },
                   )
                 : const Center(child: CircularProgressIndicator()),
@@ -147,5 +149,19 @@ class _HomeLandingState extends State<HomeLanding> {
       default:
         return const Center(child: Text("Error"));
     }
+  }
+
+  Widget _loading() {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: Colors.white,
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return const PostLoadingItem();
+        },
+      ),
+    );
   }
 }
