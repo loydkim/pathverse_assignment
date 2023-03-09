@@ -32,7 +32,7 @@
 - Show current post content and all comments list.
 - If touch the more button, it shows Report, Block dropdown button.
 
--- ### Develop environment --
+### Develop environment
 
 - Computer: Apple Mac Mini M2 
 - OS: Ventura 13.2
