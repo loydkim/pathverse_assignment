@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// The textfield of auth design same
+/// create a custom auth text field
 class AuthTextField extends StatelessWidget {
   final String labelText;
   final String? Function(String?)? validator;

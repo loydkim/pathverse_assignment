@@ -11,6 +11,7 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+/// Try to make a similar original pathverse log-in page.
 class _LoginState extends State<Login> {
   bool _passwordVisible = false;
   final _formKey = GlobalKey<FormState>();

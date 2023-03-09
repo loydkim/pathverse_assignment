@@ -35,6 +35,8 @@ class _HomeLandingState extends State<HomeLanding> {
     super.initState();
     _items = _generateItems;
     _scrollController.addListener(() {
+      // if the scroll closes to end of scroll position
+      // paging ( load more list )
       if (_scrollController.position.maxScrollExtent >
           _scrollController.position.pixels - 100) {
         if (_itemCount < _posts.length) {
@@ -93,6 +95,8 @@ class _HomeLandingState extends State<HomeLanding> {
                 return const Center(child: Text("No Posts"));
               }
 
+              // After fetching posts, set user color with post user Id
+              // Each user has specific color
               for (var post in _posts) {
                 if (!_users.containsKey(post.userId)) {
                   _users[post.userId] = User(
@@ -109,7 +113,7 @@ class _HomeLandingState extends State<HomeLanding> {
               return PathverseCollapsibleSideBar(
                   isHideSidebar: _isHideSidebar,
                   items: _items,
-                  body: _loading());
+                  body: _loadingPostsList());
             }
           },
         ),
@@ -118,6 +122,7 @@ class _HomeLandingState extends State<HomeLanding> {
   }
 
   Widget _body() {
+    // Main Widget
     switch (_currentPage) {
       case Pages.dashboard:
         return AnimatedSize(
@@ -151,7 +156,7 @@ class _HomeLandingState extends State<HomeLanding> {
     }
   }
 
-  Widget _loading() {
+  Widget _loadingPostsList() {
     return Container(
       height: double.infinity,
       width: double.infinity,

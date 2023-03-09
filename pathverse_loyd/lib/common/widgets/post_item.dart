@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pathverse_loyd/common/theme/app_text_theme.dart';
 import 'package:pathverse_loyd/common/widgets/expandable_text.dart';
 import 'package:pathverse_loyd/models/post.dart';
-import 'package:pathverse_loyd/models/user.dart';
 import 'package:pathverse_loyd/pages/comment/comment_page.dart';
 import 'package:pathverse_loyd/pages/user/user_page.dart';
 
