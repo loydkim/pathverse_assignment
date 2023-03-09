@@ -42,3 +42,7 @@
 - VS Code version: 1.76.0
 - Xcode: 14.2
 - Android: 33.0.1
+
+### Design Reference link
+
+- https://dribbble.com/shots/14489305-Bookmark-App
